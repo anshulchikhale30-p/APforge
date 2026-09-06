@@ -295,7 +295,7 @@
     </div>
     <span class="pill"><span class="dot live" id="status-dot"></span><span id="status-text">connecting…</span></span>
     <span class="pill" id="gen-pill" title="when these results were generated">—</span>
-    <button id="run-btn" type="button"><span class="spinner"></span>Run Demo</button>
+    <button id="run-btn" type="button"><span class="spinner"></span>Replay Learning Loop</button>
   </div>
 </header>
 
@@ -428,7 +428,7 @@ python -m pytest                          # full test suite</div>
   <footer>
     APforge demo · every metric on this page is read from real engine executions
     (<span id="foot-path" class="code" style="padding:2px 8px">benchmarks/results</span>) — nothing is hardcoded.
-    &ldquo;Run Demo&rdquo; re-runs the evolution benchmark and refreshes these numbers.
+    &ldquo;Replay Learning Loop&rdquo; runs a fresh real learning-loop session.
   </footer>
 </div>
 
@@ -474,15 +474,20 @@ function bindRunButton() {
   const btn = $("#run-btn");
   btn.addEventListener("click", async () => {
     btn.disabled = true; btn.classList.add("running");
-    setStatus("running real benchmark…", "busy");
+    setStatus("running live learning loop…", "busy");
     try {
       const body = await fetchJson("/api/demo/run", { method: "POST" });
-      state.summary = body.summary; state.details = body.details; state.loop = body.loop;
-      renderAll();
-      const when = (body.summary?.generated_at || "").slice(0, 19).replace("T", " ");
-      setStatus("refreshed " + when, "live");
+      if (body.mode === "live_loop_replay" && body.loop) {
+        // Lightweight replay: refresh only the real live learning-loop data.
+        // The benchmark section keeps the committed V1 -> V2 -> V3 results.
+        state.loop = body.loop;
+        renderLiveLoop();
+        setStatus("live loop replayed (" + state.loop.turns_total + " turns)", "live");
+      } else {
+        setStatus("unexpected response from replay endpoint", "err");
+      }
     } catch (e) {
-      setStatus("run failed: " + e.message, "err");
+      setStatus("replay failed: " + e.message, "err");
     } finally {
       btn.disabled = false; btn.classList.remove("running");
     }

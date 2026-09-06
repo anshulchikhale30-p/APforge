@@ -7,9 +7,10 @@ files and real engine output — not fabricated numbers. These tests therefore:
   committed ``benchmarks/results`` files,
 - assert the live loop endpoint runs real engine turns (real reflections,
   memory rows, strategy deltas, version bumps),
-- verify the "Run Demo" endpoint executes the real evolution harness
-  (patched down to a single deterministic suite so the test stays fast) and
-  returns refreshed results written to its own results directory.
+- verify the "Replay Learning Loop" endpoint (``POST /api/demo/run``) runs the
+  lightweight ``run_live_loop()`` replay, returns ``mode === 'live_loop_replay'``
+  with real learning-loop data, and does NOT call ``run_evolution()`` or write
+  any benchmark result files.
 """
 
 from __future__ import annotations
@@ -22,8 +23,6 @@ import pytest
 from fastapi.testclient import TestClient
 
 from apforge import demo
-from apforge.benchmark.runner import run_evolution
-from apforge.benchmark.tasks import CI_BUILD
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 COMMITTED_RESULTS = REPO_ROOT / "benchmarks" / "results"
@@ -58,7 +57,7 @@ def test_index_serves_dashboard(client):
     assert response.headers["content-type"].startswith("text/html")
     html = response.text
     assert "APforge" in html
-    assert "Run Demo" in html
+    assert "Replay Learning Loop" in html
     assert "generalization" in html
 
 
@@ -171,42 +170,84 @@ def test_loop_payload_does_not_reveal_answer_key(client):
 
 
 # ---------------------------------------------------------------------------
-# Run Demo endpoint (real benchmark, refreshed results)
+# Replay Learning Loop endpoint (lightweight real loop, no benchmark)
 # ---------------------------------------------------------------------------
 
+# The "Replay Learning Loop" endpoint (POST /api/demo/run) must run the real
+# run_live_loop(), return status ok / mode live_loop_replay, and never touch
+# run_evolution() or the benchmark result files.
 
-def test_run_endpoint_executes_real_benchmark_and_refreshes(client, monkeypatch):
+
+def test_run_endpoint_returns_live_loop_replay(client, monkeypatch):
     results_dir = Path(client.app.state.results_dir)
 
-    # Patch only the scope (single deterministic suite, no simulated latency);
-    # everything else is the real harness writing to the app's own directory.
-    calls = {}
+    # Sentinel: if the endpoint ever called run_evolution it would land here.
+    # raising=False: the demo module no longer carries a run_evolution
+    # reference at all, so this also proves the endpoint cannot invoke it.
+    evolution_called = []
 
-    def fast_run(output_dir):
-        calls["output_dir"] = output_dir
-        return run_evolution([CI_BUILD], output_dir=output_dir, latency_scale=0)
+    # the demo module no longer imports/references run_evolution
+    assert not hasattr(demo, "run_evolution")
 
-    monkeypatch.setattr(demo, "run_evolution", fast_run)
+    def should_never_run(output_dir, **kwargs):
+        evolution_called.append(output_dir)
+
+    monkeypatch.setattr(demo, "run_evolution", should_never_run, raising=False)
+
+    # Snapshot the results dir (the fixture seeded copies of the committed
+    # files) so we can prove the endpoint leaves it untouched.
+    before = {
+        name: (results_dir / name).read_bytes() if (results_dir / name).is_file() else None
+        for name in RESULT_FILES
+    }
+    entries_before = {p.name for p in results_dir.iterdir()}
 
     response = client.post("/api/demo/run")
     assert response.status_code == 200
     body = response.json()
 
-    assert calls["output_dir"] == str(results_dir)
+    # response contract
+    assert body["status"] == "ok"
+    assert body["mode"] == "live_loop_replay"
+    assert "loop" in body
 
-    # refreshed result files were written into the app's results dir
+    # run_evolution() must NOT be called by this endpoint
+    assert evolution_called == []
+
+    # the endpoint must not create, modify, or delete benchmark result files
+    assert {p.name for p in results_dir.iterdir()} == entries_before
     for name in RESULT_FILES:
-        assert (results_dir / name).is_file()
-    refreshed = json.loads((results_dir / "evolution_summary.json").read_text(encoding="utf-8"))
-    assert refreshed["generated_at"] == body["generated_at"]
+        after = (results_dir / name).read_bytes() if (results_dir / name).is_file() else None
+        assert after == before[name]
 
-    # single-suite deterministic run: naive V1 solves nothing, V3 solves all
-    summary = body["summary"]
-    assert set(summary["per_suite"]) == {"ci.build"}
-    assert summary["headline"]["eval"]["v1"]["solve_rate"] == 0.0
-    assert summary["headline"]["eval"]["v3"]["solve_rate"] == 1.0
-    assert summary["headline"]["gen"]["v3"]["solve_rate"] == 1.0
 
-    # refreshed detail payload tracks the new run
-    assert set(body["details"]["suites"]) == {"ci.build"}
-    assert body["loop"]["turns_total"] >= 1
+def test_run_endpoint_returns_real_learning_loop_data(client):
+    body = client.post("/api/demo/run").json()
+    loop = body["loop"]
+
+    # real learning-loop data, same shape as the live loop endpoint
+    assert loop["turns_total"] == len(loop["turns"]) >= 1
+    assert loop["agent_version_start"] == 1
+    assert loop["agent_version_end"] > loop["agent_version_start"]
+
+    first = loop["turns"][0]
+    # deterministic naive V1: the decoy instrument is selected first and fails
+    assert first["evaluation"]["success"] is False
+    assert first["reflection"]["failure_category"] != "none"
+    assert first["reflection"]["analysis"]
+    assert first["reflection"]["lesson"]
+    assert first["strategy_updates"]
+
+    for turn in loop["turns"]:
+        assert set(turn) >= {
+            "task_type", "step_question", "selection", "trace", "evaluation",
+            "reflection", "strategy_updates",
+        }
+        assert "tool_name" in turn["selection"]
+        assert turn["trace"]["status"] in ("success", "error")
+
+    # the loop learns: successes, memory + strategies persist
+    assert any(t["evaluation"]["success"] for t in loop["turns"])
+    assert loop["memory"], "persistent tool-use memory must be non-empty"
+    assert loop["strategies"], "strategy state must be non-empty"
+    assert all("success_rate" in m for m in loop["memory"])

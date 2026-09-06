@@ -3,7 +3,7 @@
 Serves a single-file web dashboard (``demo/index.html``) plus a small API.
 Every number the dashboard displays is produced by *real* engine executions —
 either the committed benchmark results under ``benchmarks/results/`` or a
-fresh run triggered by the "Run Demo" button:
+fresh learning-loop replay triggered by the "Replay Learning Loop" button:
 
 - ``GET  /api/demo/summary``  -> benchmarks/results/evolution_summary.json
 - ``GET  /api/demo/details``  -> compact detail view derived from
@@ -14,9 +14,9 @@ fresh run triggered by the "Run Demo" button:
                                  the real engine on deterministic benchmark
                                  tasks (USE -> OBSERVE -> EVALUATE -> REFLECT
                                  -> REMEMBER -> CHANGE STRATEGY)
-- ``POST /api/demo/run``      -> re-run the real evolution benchmark
-                                 (``apforge.benchmark.runner.run_evolution``)
-                                 and return the refreshed results
+- ``POST /api/demo/run``      -> replay the real learning loop by running
+                                 ``run_live_loop()`` (lightweight, no benchmark,
+                                 no filesystem writes)
 - ``GET  /health``            -> service + data availability check
 
 Run locally:
@@ -35,7 +35,7 @@ from typing import Any, Optional
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 
-from .benchmark.runner import build_suite_world, run_evolution
+from .benchmark.runner import build_suite_world
 from .benchmark.tasks import CI_BUILD, build_criteria, make_bundle, set_latency_scale
 from .models import TaskSpec
 
@@ -61,7 +61,7 @@ def _read_results_json(results_dir: str, filename: str) -> dict[str, Any]:
             status_code=404,
             detail=(
                 f"missing {filename} in {results_dir!r} - run the benchmark first "
-                "(`python benchmarks/run_evolution.py`) or click \"Run Demo\"."
+                "(`python benchmarks/run_evolution.py`)."
             ),
         )
     with open(path, encoding="utf-8") as handle:
@@ -285,29 +285,25 @@ def create_demo_app(
 
     @app.post("/api/demo/run")
     def run_demo() -> dict[str, Any]:
-        """Execute the real evolution benchmark and return refreshed results.
+        """Replay the real learning loop without touching the benchmark.
 
-        Runs ``run_evolution`` over all suites with real simulated latency
-        (deterministically seeded, so the cohort-level numbers reproduce while
-        measured wall-clock latency is freshly recorded). Writes the refreshed
-        JSON results under ``results_dir``, then returns the updated payloads.
+        Serverless-safe: executes only the lightweight ``run_live_loop()``
+        (an actual engine session on deterministic benchmark tasks) in memory
+        and returns the recorded loop. It does NOT run the long
+        ``run_evolution()`` benchmark and does NOT write any benchmark result
+        files to the deployment filesystem.
         """
-        if not app.state.lock.acquire(blocking=False):
-            raise HTTPException(
-                status_code=409, detail="a benchmark run is already in progress"
-            )
         try:
-            run_evolution(output_dir=results_dir)
-            summary_body = _evolution_summary(results_dir)
-            details_body = _derived_details(results_dir)
-            loop_body = run_live_loop()
-        finally:
-            app.state.lock.release()
+            loop = run_live_loop()
+        except Exception as exc:
+            raise HTTPException(
+                status_code=500,
+                detail=f"live loop failed: {exc}",
+            ) from exc
         return {
-            "generated_at": summary_body.get("generated_at"),
-            "summary": summary_body,
-            "details": details_body,
-            "loop": loop_body,
+            "status": "ok",
+            "mode": "live_loop_replay",
+            "loop": loop,
         }
 
     return app
