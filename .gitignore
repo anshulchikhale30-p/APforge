@@ -227,3 +227,4 @@ __marimo__/
 *.apforge.db
 *.apforge.db-wal
 *.apforge.db-shm
+.vercel
