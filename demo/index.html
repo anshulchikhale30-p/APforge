@@ -295,11 +295,13 @@
     </div>
     <span class="pill"><span class="dot live" id="status-dot"></span><span id="status-text">connecting…</span></span>
     <span class="pill" id="gen-pill" title="when these results were generated">—</span>
-    <button id="run-btn" type="button"><span class="spinner"></span>Replay Learning Loop</button>
+    <button id="run-btn" type="button"><span class="spinner"></span><span id="run-btn-label">Replay Learning Loop</span></button>
   </div>
 </header>
 
 <div class="wrap">
+
+  <div id="replay-error" class="errorbox" style="display:none" role="alert"></div>
 
   <!-- ===================== learning loop ===================== -->
   <section id="loop-flow" class="fade">
@@ -317,7 +319,7 @@
   <!-- ===================== live loop walkthrough ===================== -->
   <section id="live-loop" class="fade">
     <div class="kick">Real engine walkthrough</div>
-    <h2>Live learning loop — turn by turn</h2>
+    <h2>Live learning loop — turn by turn <span id="last-replay" class="chip info" style="display:none; margin-left:10px; vertical-align:middle"></span></h2>
     <p class="sub">Fresh session on the real <span id="loop-suite-name"></span> benchmark. V1’s strategy is naive, so the
       first turns pick the wrong instrument; the loop reacts with evaluation, reflection, memory, and strategy deltas
       until the same task types succeed. Click a turn to see its full trace.</p>
@@ -470,25 +472,52 @@ async function fetchJson(url, opts) {
 }
 
 /* ----------------------------------------------------------- run button */
+const RUN_BTN_IDLE = "Replay Learning Loop";
+const RUN_BTN_BUSY = "Replaying learning loop…";
+
+function setReplayError(message) {
+  const box = $("#replay-error");
+  if (!box) return;
+  if (!message) { box.style.display = "none"; box.textContent = ""; return; }
+  box.textContent = message;
+  box.style.display = "block";
+}
+
 function bindRunButton() {
   const btn = $("#run-btn");
+  const label = $("#run-btn-label");
   btn.addEventListener("click", async () => {
+    setReplayError("");                      // clear any stale error
+    label.textContent = RUN_BTN_BUSY;        // visible loading state on the button
     btn.disabled = true; btn.classList.add("running");
     setStatus("running live learning loop…", "busy");
+    console.log("[APforge] Replay Learning Loop started");
     try {
-      const body = await fetchJson("/api/demo/run", { method: "POST" });
-      if (body.mode === "live_loop_replay" && body.loop) {
-        // Lightweight replay: refresh only the real live learning-loop data.
-        // The benchmark section keeps the committed V1 -> V2 -> V3 results.
-        state.loop = body.loop;
-        renderLiveLoop();
-        setStatus("live loop replayed (" + state.loop.turns_total + " turns)", "live");
-      } else {
-        setStatus("unexpected response from replay endpoint", "err");
+      const body = await fetchJson("/api/demo/run", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      if (body.mode !== "live_loop_replay" || !body.loop) {
+        throw new Error("unexpected response from replay endpoint");
       }
-    } catch (e) {
-      setStatus("replay failed: " + e.message, "err");
+      // Real engine result: refresh the live learning-loop sections in place.
+      // The benchmark section keeps the committed V1 -> V2 -> V3 results.
+      state.loop = body.loop;
+      renderLiveLoop();
+      const chip = $("#last-replay");
+      if (chip) {
+        chip.style.display = "";
+        chip.textContent = "replayed " + new Date().toLocaleTimeString() + " · fresh real engine session";
+      }
+      setStatus("live loop replayed (" + state.loop.turns_total + " turns)", "live");
+      console.log("[APforge] Replay Learning Loop completed");
+    } catch (err) {
+      const msg = "Replay failed: " + (err && err.message ? err.message : err);
+      console.error("[APforge] Replay Learning Loop failed:", err);
+      setStatus(msg, "err");
+      setReplayError(msg);
     } finally {
+      label.textContent = RUN_BTN_IDLE;      // restore + re-enable
       btn.disabled = false; btn.classList.remove("running");
     }
   });

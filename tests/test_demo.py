@@ -251,3 +251,51 @@ def test_run_endpoint_returns_real_learning_loop_data(client):
     assert loop["memory"], "persistent tool-use memory must be non-empty"
     assert loop["strategies"], "strategy state must be non-empty"
     assert all("success_rate" in m for m in loop["memory"])
+
+
+def test_run_endpoint_contract_matches_dashboard_renderer(client):
+    """Regression: the replay payload must carry every field the dashboard's
+    renderLiveLoop() reads, so the "Replay Learning Loop" button can visibly
+    refresh the live-loop section from a fresh real engine session."""
+    body = client.post("/api/demo/run").json()
+
+    assert body["status"] == "ok"
+    assert body["mode"] == "live_loop_replay"
+    assert set(body) == {"status", "mode", "loop"}
+
+    loop = body["loop"]
+    assert set(loop) == {
+        "suite_id", "title", "description", "steps", "turns", "turns_total",
+        "successes", "failures", "agent_version_start", "agent_version_end",
+        "memory", "strategies", "versions",
+    }
+    assert loop["failures"] + loop["successes"] == loop["turns_total"]
+
+    # header stats rendered by the dashboard
+    assert isinstance(loop["agent_version_start"], int)
+    assert isinstance(loop["agent_version_end"], int)
+
+    # per-turn fields consumed by renderLiveLoop()
+    for turn in loop["turns"]:
+        assert set(turn) == {
+            "index", "task_type", "step_id", "step_question", "selection",
+            "trace", "evaluation", "reflection", "strategy_updates",
+            "agent_version_before", "agent_version_after", "version_reason",
+        }
+        assert set(turn["selection"]) == {"tool_name", "score", "scores", "rationale"}
+        assert set(turn["trace"]) == {"tool_name", "status", "duration_ms", "error", "result"}
+        assert set(turn["evaluation"]) == {"success", "score", "notes"}
+        assert set(turn["reflection"]) == {
+            "failure_category", "analysis", "lesson", "suggested_tool",
+        }
+        for upd in turn["strategy_updates"]:
+            assert set(upd) == {"tool_name", "delta", "reason"}
+
+    # memory / strategy rows consumed by renderLiveLoop()
+    for row in loop["memory"]:
+        assert set(row) >= {
+            "tool_name", "task_type", "success_count", "failure_count",
+            "total_count", "success_rate",
+        }
+    for row in loop["strategies"]:
+        assert set(row) >= {"tool_name", "task_type", "prior", "delta", "reason"}
