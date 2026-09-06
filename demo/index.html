@@ -556,8 +556,6 @@ function renderFlow() {
 /* ----------------------------------------------------------- live loop */
 function renderLiveLoop() {
   const loop = state.loop;
-  const correctByStep = {};
-  for (const st of loop.steps || []) correctByStep[st.step_id] = st.correct_tool;
   $("#loop-suite-name").textContent = (loop.title || loop.suite_id) + " (phase A)";
 
   $("#loop-stats").innerHTML = [
@@ -580,7 +578,7 @@ function renderLiveLoop() {
     <details class="turn ${failure ? "fail" : "pass"}" ${i < 3 ? "open" : ""}>
       <summary>
         <span class="tnum">TURN ${String(t.index).padStart(2, "0")}</span>
-        <span class="q">${esc(t.step_question)}<small>${esc(t.task_type)} · step ${esc(t.step_id)} · correct instrument ${esc(correctByStep[t.step_id] || "")}</small></span>
+        <span class="q">${esc(t.step_question)}<small>${esc(t.task_type)} · step ${esc(t.step_id)}</small></span>
         <span class="chip ${ok ? "ok" : "err"}">${ok ? "SUCCESS" : "FAILURE · " + esc(refl.failure_category)}</span>
         <span class="chip info">v${t.agent_version_before} → v${t.agent_version_after}</span>
         <span class="chev">▶</span>
@@ -764,10 +762,6 @@ function renderMetricBars(set) {
 /* --------------------------------------------------- strategy & memory */
 function renderLearning() {
   const suites = state.summary.per_suite;
-  const correctByCat = {};
-  for (const [sid, s] of Object.entries(state.details.suites || {})) {
-    for (const st of s.steps || []) correctByCat[sid + "|" + st.category] = st.correct_tool;
-  }
 
   const blocks = Object.entries(suites).map(([sid, s]) => {
     const tr = s.training || {};
@@ -776,11 +770,9 @@ function renderLearning() {
       if (!p) return "<span class='muted'>—</span>";
       const cats = Object.entries(p.category_selections || {});
       const body = cats.length ? cats.map(([cat, tools]) => {
-        const correct = correctByCat[sid + "|" + cat];
-        const chips = Object.entries(tools).map(([tool, count]) => {
-          const cls = tool === correct ? "ok" : (count >= 2 ? "err" : "warn");
-          return `<span class="chip ${cls}" title="${ cls === "ok" ? "correct instrument" : cls === "err" ? "wrong instrument (mostly)" : "wrong instrument" }">${ esc(tool) } ×${ count }</span>`;
-        }).join(" ");
+        const chips = Object.entries(tools).map(([tool, count]) =>
+          `<span class="chip" title="times selected for this task type">${ esc(tool) } ×${ count }</span>`
+        ).join(" ");
         return `<div style="margin:6px 0"><span class="faint" style="font-size:11px">${ esc(cat) }</span><br>${ chips }</div>`;
       }).join("") : "<span class='muted'>no selections recorded</span>";
       return `
@@ -854,21 +846,18 @@ function renderTraces() {
     <h3 style="margin:0 0 4px">${ esc(s.title) }</h3>
     <p class="muted" style="margin:0 0 10px">${ esc(s.description || "") }</p>
     <div style="display:flex;flex-wrap:wrap;gap:6px">${ (s.steps || []).map((st) =>
-      `<span class="chip" title="correct instrument: ${ esc(st.correct_tool) }">${ esc(st.question) }</span>`).join("") }</div>`;
+      `<span class="chip">${ esc(st.question) }</span>`).join("") }</div>`;
 
   const col = (stage, label, cls) => {
     const stageData = s.stages?.[stage];
     const scenarios = stageData?.["eval_scenarios"] || [];
     const sc = scenarios[0];
     if (!sc) return `<div class="card"><h3>${ label }</h3><p class="muted">no scenario data.</p></div>`;
-    const calls = (sc.calls || []).map((c, i) => {
-      const correct = c.is_correct_tool;
+    const calls = (sc.calls || []).map((c) => {
       const ok = c.status === "success";
       return `<div class="call ${ ok ? "ok" : "err" }">
-        <span class="c">${ correct ? "✔" : "✘" }</span>
         <span class="tool">${ esc(c.tool) }</span>
         <span class="chip ${ ok ? "ok" : "err" }">${ ok ? "ok" : "error" }</span>
-        <span class="chip ${ c.unnecessary ? "warn" : "ok" }">${ c.unnecessary ? "unnecessary" : "needed" }</span>
         <span class="extra">${ c.duration_ms } ms · ${ Number(c.cost).toFixed(1) }</span>
       </div>`;
     }).join("");

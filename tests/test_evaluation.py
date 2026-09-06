@@ -67,3 +67,52 @@ def test_evaluation_records_criteria_and_trace_id():
     assert ev.trace_id == "t1"
     assert ev.criteria == {"expected_output": "ok"}
     assert 0.0 <= ev.score <= 1.0
+
+
+def test_field_output_match_succeeds():
+    """Benchmark-style criteria: compare a result sub-field, not the whole dict."""
+    evaluator = RuleEvaluator()
+    criteria = {
+        "expected_field": "value",
+        "expected_output": "answer-42",
+        "signal_on_mismatch": "wrong-information-source",
+    }
+    ev = evaluator.evaluate(
+        make_observation(result={"source": "any.tool", "value": "answer-42"}),
+        criteria,
+    )
+    assert ev.success is True
+    assert ev.score == 1.0
+
+
+def test_field_output_mismatch_emits_signal_without_answer():
+    """A mismatching tool produces an outcome signal, never the ground truth."""
+    evaluator = RuleEvaluator()
+    criteria = {
+        "expected_field": "value",
+        "expected_output": "the-secret-answer",
+        "signal_on_mismatch": "wrong-information-source",
+    }
+    ev = evaluator.evaluate(
+        make_observation(result={"source": "decoy.tool", "value": "noise"}),
+        criteria,
+    )
+    assert ev.success is False
+    assert ev.score == 0.0
+    assert "wrong-information-source" in ev.notes
+    # feedback must not echo the answer key (datum or correct tool identity)
+    assert "the-secret-answer" not in ev.notes
+    assert "decoy.tool" not in ev.notes
+    assert "any.tool" not in ev.notes
+
+
+def test_error_emits_signal_when_field_criteria_present():
+    evaluator = RuleEvaluator()
+    criteria = {"signal_on_error": "insufficient-evidence"}
+    ev = evaluator.evaluate(
+        make_observation(status=TraceStatus.ERROR, error="upstream down"),
+        criteria,
+    )
+    assert ev.success is False
+    assert "insufficient-evidence" in ev.notes
+    assert "upstream down" in ev.notes

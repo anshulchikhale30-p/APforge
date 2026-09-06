@@ -109,6 +109,68 @@ def test_registry_executes_suite_tools():
     assert result.result == {"source": step.correct_tool, "value": bundle[step.data_key]}
 
 
+def test_build_criteria_does_not_embed_answer_key():
+    """Judge-side criteria must never carry the correct (or decoy) tool name."""
+    from apforge.benchmark.tasks import build_criteria
+
+    for suite in SUITES:
+        tool_names = set(suite.tools())
+        for set_name in suite.instance_counts:
+            for idx in range(suite.instance_counts[set_name]):
+                bundle = make_bundle(suite, set_name, idx)
+                for step in suite.steps:
+                    criteria = build_criteria(suite, bundle, step)
+                    serialized = json.dumps(criteria)
+                    assert step.correct_tool not in serialized, (
+                        f"{suite.suite_id} criteria leaks correct tool for {step.step_id}"
+                    )
+                    assert step.decoy_tool not in serialized
+                    for tool in tool_names:
+                        assert tool not in serialized
+                    # the expected datum is compared via a result sub-field
+                    assert criteria["expected_field"] == "value"
+                    assert criteria["expected_output"] == bundle[step.data_key]
+                    assert "source" not in criteria
+                    assert criteria["signal_on_mismatch"] == "wrong-information-source"
+                    assert criteria["signal_on_error"] == "insufficient-evidence"
+
+
+def test_training_feedback_never_contains_correct_tool():
+    """Persisted evaluations from a real learning phase must not leak answers.
+
+    The loop's REMEMBER/CHANGE STRATEGY steps consume only outcome-level
+    feedback (success/failure + signals), never the correct tool identity.
+    """
+    db, engine, strategy, agent_id = build_suite_world(CI_BUILD, ":memory:")
+    try:
+        sets = small_sets(CI_BUILD)
+        train_on(CI_BUILD, engine, agent_id, sets["train_a"])
+        correct_by_category = {
+            step.category: step.correct_tool for step in CI_BUILD.steps
+        }
+        traces = db.list_traces(agent_id)
+        assert traces, "learning phase must persist traces"
+        for trace in traces:
+            evaluation = db.get_evaluation_by_trace(trace.id)
+            assert evaluation is not None
+            answer = correct_by_category[trace.task_type]
+            criteria_text = json.dumps(evaluation.criteria)
+            assert answer not in criteria_text, trace.task_type
+            assert answer not in evaluation.notes, trace.task_type
+            # feedback is signal-shaped: success/pass, wrong-information-source,
+            # or insufficient-evidence — never a named answer
+            assert any(
+                marker in evaluation.notes
+                for marker in (
+                    "all criteria passed",
+                    "wrong-information-source",
+                    "insufficient-evidence",
+                )
+            ), evaluation.notes
+    finally:
+        db.close()
+
+
 # ---------------------------------------------------------------------------
 # Harness behavior
 # ---------------------------------------------------------------------------

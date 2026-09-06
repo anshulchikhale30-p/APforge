@@ -152,6 +152,24 @@ def test_loop_runs_real_engine_turns(client):
     assert all("success_rate" in m for m in body["memory"])
 
 
+def test_loop_payload_does_not_reveal_answer_key(client):
+    """The live-loop walkthrough must not annotate steps with the answer key."""
+    body = client.get("/api/demo/loop").json()
+
+    steps = body.get("steps", [])
+    assert steps, "live loop must describe its steps"
+    for step in steps:
+        assert "correct_tool" not in step
+        assert "decoy_tool" not in step
+        # non-answer task description is preserved for the dashboard
+        assert {"step_id", "category", "question"} <= set(step)
+
+    # no per-turn annotation names the ground-truth instrument
+    for turn in body["turns"]:
+        assert "correct_tool" not in turn
+        assert "correct instrument" not in json.dumps(turn)
+
+
 # ---------------------------------------------------------------------------
 # Run Demo endpoint (real benchmark, refreshed results)
 # ---------------------------------------------------------------------------

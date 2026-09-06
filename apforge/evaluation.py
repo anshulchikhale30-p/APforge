@@ -13,11 +13,22 @@ class RuleEvaluator:
 
     Scores an observation in [0, 1] against optional criteria:
 
-    - ``expected_output``: the tool result must equal this value
+    - ``expected_output``: the tool result must equal this value. If the
+      criteria also set ``expected_field``, only that sub-field of the result
+      dict is compared (used by the benchmark so the ground-truth *datum* is
+      checked without exposing the correct tool identity in feedback).
+    - ``signal_on_mismatch``: outcome signal name (e.g. ``wrong-information-
+      source``) recorded in the notes when ``expected_field`` comparison fails.
+    - ``signal_on_error``: outcome signal name (e.g. ``insufficient-evidence``)
+      recorded in the notes when the tool errored.
     - ``output_contains``: the stringified result must contain this substring
     - ``max_duration_ms``: the tool must not take longer than this
     - ``must_not_contain``: list of substrings that must not appear in the
       result or error text
+
+    Feedback is outcome-level: notes describe *why* an observation failed
+    (success/failure, wrong-information-source, insufficient-evidence, ...)
+    but never echo a ground-truth answer key.
     """
 
     def evaluate(
@@ -29,11 +40,33 @@ class RuleEvaluator:
 
         if observation.status != TraceStatus.SUCCESS:
             ok = False
-            notes.append(f"tool errored: {observation.error or 'unknown error'}")
+            signal = criteria.get("signal_on_error")
+            if signal:
+                notes.append(
+                    f"{signal}: tool errored: {observation.error or 'unknown error'}"
+                )
+            else:
+                notes.append(f"tool errored: {observation.error or 'unknown error'}")
 
         if "expected_output" in criteria:
             expected = criteria["expected_output"]
-            if observation.result != expected:
+            field = criteria.get("expected_field")
+            if field:
+                got = (
+                    observation.result.get(field)
+                    if isinstance(observation.result, dict)
+                    else None
+                )
+                if got != expected:
+                    ok = False
+                    notes.append(
+                        criteria.get(
+                            "signal_on_mismatch", "wrong-information-source"
+                        )
+                        + ": the selected tool returned a different information "
+                          "source than the task requires"
+                    )
+            elif observation.result != expected:
                 ok = False
                 notes.append(
                     f"output mismatch: expected {expected!r}, got {observation.result!r}"

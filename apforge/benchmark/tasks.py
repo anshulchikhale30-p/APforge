@@ -254,8 +254,22 @@ def make_bundle(suite: SuiteDefinition, set_name: str, idx: int) -> dict[str, An
 def build_criteria(
     suite: SuiteDefinition, bundle: dict[str, Any], step: StepDef
 ) -> dict[str, Any]:
-    """Evaluation criteria for one step on one instance."""
-    return {"expected_output": {"source": step.correct_tool, "value": bundle[step.data_key]}}
+    """Judge-side evaluation criteria for one step on one instance.
+
+    The criteria handed to the learning loop carry only the expected datum and
+    the *outcome signals* the evaluator should emit. The identity of the
+    correct tool is never embedded here: reflection/strategy and persisted
+    evaluations get success/failure plus an outcome-level signal
+    (``wrong-information-source`` / ``insufficient-evidence``) instead of the
+    answer key. The runner keeps ``step.correct_tool`` judge-side to score
+    measurements.
+    """
+    return {
+        "expected_field": "value",
+        "expected_output": bundle[step.data_key],
+        "signal_on_mismatch": "wrong-information-source",
+        "signal_on_error": "insufficient-evidence",
+    }
 
 
 # ---------------------------------------------------------------------------

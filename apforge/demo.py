@@ -202,8 +202,6 @@ def run_live_loop() -> dict[str, Any]:
                     "step_id": step.step_id,
                     "category": step.category,
                     "question": step.question,
-                    "correct_tool": step.correct_tool,
-                    "decoy_tool": step.decoy_tool,
                 }
                 for step in suite.steps
             ],
