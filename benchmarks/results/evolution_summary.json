@@ -1,0 +1,909 @@
+{
+  "experiment": "V1 -> experience -> learning -> V2 -> learning -> V3",
+  "generated_at": "2026-09-06T02:30:36.690023+00:00",
+  "schema_version": "1.0",
+  "notes": [
+    "All metrics come from real executions of the harness in this run.",
+    "Latency is the wall-clock ms measured around each real tool call; tools model heavyweight instrumentation with small deterministic delays.",
+    "Cost is a modeled per-instrument charge (units per call) applied to the real recorded call counts.",
+    "Agent versions are bumped by the engine whenever a learning phase changes the strategy; V1/V2/V3 are the measured stages at version 1, after phase A, and after phase B respectively."
+  ],
+  "headline": {
+    "eval": {
+      "v1": {
+        "scenarios_total": 20,
+        "scenarios_solved": 0,
+        "solve_rate": 0.0,
+        "step_success_rate": 0.0,
+        "total_tool_calls": 216,
+        "unnecessary_tool_calls": 216,
+        "unnecessary_call_rate": 1.0,
+        "failures": 102,
+        "latency_ms": 2941,
+        "average_latency_ms_per_call": 13.62,
+        "cost": 327.3,
+        "average_cost_per_solved_scenario": 0.0
+      },
+      "v2": {
+        "scenarios_total": 20,
+        "scenarios_solved": 8,
+        "solve_rate": 0.4,
+        "step_success_rate": 0.8333,
+        "total_tool_calls": 96,
+        "unnecessary_tool_calls": 36,
+        "unnecessary_call_rate": 0.375,
+        "failures": 0,
+        "latency_ms": 582,
+        "average_latency_ms_per_call": 6.06,
+        "cost": 96.0,
+        "average_cost_per_solved_scenario": 12.0
+      },
+      "v3": {
+        "scenarios_total": 20,
+        "scenarios_solved": 20,
+        "solve_rate": 1.0,
+        "step_success_rate": 1.0,
+        "total_tool_calls": 72,
+        "unnecessary_tool_calls": 0,
+        "unnecessary_call_rate": 0.0,
+        "failures": 0,
+        "latency_ms": 453,
+        "average_latency_ms_per_call": 6.29,
+        "cost": 72.0,
+        "average_cost_per_solved_scenario": 3.6
+      }
+    },
+    "gen": {
+      "v1": {
+        "scenarios_total": 24,
+        "scenarios_solved": 0,
+        "solve_rate": 0.0,
+        "step_success_rate": 0.0,
+        "total_tool_calls": 264,
+        "unnecessary_tool_calls": 264,
+        "unnecessary_call_rate": 1.0,
+        "failures": 126,
+        "latency_ms": 3606,
+        "average_latency_ms_per_call": 13.66,
+        "cost": 400.8,
+        "average_cost_per_solved_scenario": 0.0
+      },
+      "v2": {
+        "scenarios_total": 24,
+        "scenarios_solved": 8,
+        "solve_rate": 0.3333,
+        "step_success_rate": 0.8182,
+        "total_tool_calls": 120,
+        "unnecessary_tool_calls": 48,
+        "unnecessary_call_rate": 0.4,
+        "failures": 0,
+        "latency_ms": 726,
+        "average_latency_ms_per_call": 6.05,
+        "cost": 120.0,
+        "average_cost_per_solved_scenario": 15.0
+      },
+      "v3": {
+        "scenarios_total": 24,
+        "scenarios_solved": 24,
+        "solve_rate": 1.0,
+        "step_success_rate": 1.0,
+        "total_tool_calls": 88,
+        "unnecessary_tool_calls": 0,
+        "unnecessary_call_rate": 0.0,
+        "failures": 0,
+        "latency_ms": 557,
+        "average_latency_ms_per_call": 6.33,
+        "cost": 88.0,
+        "average_cost_per_solved_scenario": 3.6667
+      }
+    }
+  },
+  "improvement": {
+    "eval": {
+      "v2_vs_v1": {
+        "solve_rate": {
+          "v": 0.4,
+          "before": 0.0,
+          "pct_change": null
+        },
+        "unnecessary_tool_calls": {
+          "v": 36,
+          "before": 216,
+          "pct_change": -83.33
+        },
+        "total_tool_calls": {
+          "v": 96,
+          "before": 216,
+          "pct_change": -55.56
+        },
+        "failures": {
+          "v": 0,
+          "before": 102,
+          "pct_change": -100.0
+        },
+        "latency_ms": {
+          "v": 582,
+          "before": 2941,
+          "pct_change": -80.21
+        },
+        "cost": {
+          "v": 96.0,
+          "before": 327.3,
+          "pct_change": -70.67
+        }
+      },
+      "v3_vs_v2": {
+        "solve_rate": {
+          "v": 1.0,
+          "before": 0.4,
+          "pct_change": 150.0
+        },
+        "unnecessary_tool_calls": {
+          "v": 0,
+          "before": 36,
+          "pct_change": -100.0
+        },
+        "total_tool_calls": {
+          "v": 72,
+          "before": 96,
+          "pct_change": -25.0
+        },
+        "failures": {
+          "v": 0,
+          "before": 0,
+          "pct_change": null
+        },
+        "latency_ms": {
+          "v": 453,
+          "before": 582,
+          "pct_change": -22.16
+        },
+        "cost": {
+          "v": 72.0,
+          "before": 96.0,
+          "pct_change": -25.0
+        }
+      },
+      "v3_vs_v1": {
+        "solve_rate": {
+          "v": 1.0,
+          "before": 0.0,
+          "pct_change": null
+        },
+        "unnecessary_tool_calls": {
+          "v": 0,
+          "before": 216,
+          "pct_change": -100.0
+        },
+        "total_tool_calls": {
+          "v": 72,
+          "before": 216,
+          "pct_change": -66.67
+        },
+        "failures": {
+          "v": 0,
+          "before": 102,
+          "pct_change": -100.0
+        },
+        "latency_ms": {
+          "v": 453,
+          "before": 2941,
+          "pct_change": -84.6
+        },
+        "cost": {
+          "v": 72.0,
+          "before": 327.3,
+          "pct_change": -78.0
+        }
+      }
+    },
+    "gen": {
+      "v2_vs_v1": {
+        "solve_rate": {
+          "v": 0.3333,
+          "before": 0.0,
+          "pct_change": null
+        },
+        "unnecessary_tool_calls": {
+          "v": 48,
+          "before": 264,
+          "pct_change": -81.82
+        },
+        "total_tool_calls": {
+          "v": 120,
+          "before": 264,
+          "pct_change": -54.55
+        },
+        "failures": {
+          "v": 0,
+          "before": 126,
+          "pct_change": -100.0
+        },
+        "latency_ms": {
+          "v": 726,
+          "before": 3606,
+          "pct_change": -79.87
+        },
+        "cost": {
+          "v": 120.0,
+          "before": 400.8,
+          "pct_change": -70.06
+        }
+      },
+      "v3_vs_v2": {
+        "solve_rate": {
+          "v": 1.0,
+          "before": 0.3333,
+          "pct_change": 200.03
+        },
+        "unnecessary_tool_calls": {
+          "v": 0,
+          "before": 48,
+          "pct_change": -100.0
+        },
+        "total_tool_calls": {
+          "v": 88,
+          "before": 120,
+          "pct_change": -26.67
+        },
+        "failures": {
+          "v": 0,
+          "before": 0,
+          "pct_change": null
+        },
+        "latency_ms": {
+          "v": 557,
+          "before": 726,
+          "pct_change": -23.28
+        },
+        "cost": {
+          "v": 88.0,
+          "before": 120.0,
+          "pct_change": -26.67
+        }
+      },
+      "v3_vs_v1": {
+        "solve_rate": {
+          "v": 1.0,
+          "before": 0.0,
+          "pct_change": null
+        },
+        "unnecessary_tool_calls": {
+          "v": 0,
+          "before": 264,
+          "pct_change": -100.0
+        },
+        "total_tool_calls": {
+          "v": 88,
+          "before": 264,
+          "pct_change": -66.67
+        },
+        "failures": {
+          "v": 0,
+          "before": 126,
+          "pct_change": -100.0
+        },
+        "latency_ms": {
+          "v": 557,
+          "before": 3606,
+          "pct_change": -84.55
+        },
+        "cost": {
+          "v": 88.0,
+          "before": 400.8,
+          "pct_change": -78.04
+        }
+      }
+    }
+  },
+  "generalization": {
+    "eval_held_out": {
+      "v1": {
+        "solve_rate": 0.0,
+        "step_success_rate": 0.0,
+        "total_tool_calls": 216,
+        "unnecessary_tool_calls": 216,
+        "unnecessary_call_rate": 1.0,
+        "failures": 102,
+        "latency_ms": 2941,
+        "average_latency_ms_per_call": 13.62,
+        "cost": 327.3
+      },
+      "v2": {
+        "solve_rate": 0.4,
+        "step_success_rate": 0.8333,
+        "total_tool_calls": 96,
+        "unnecessary_tool_calls": 36,
+        "unnecessary_call_rate": 0.375,
+        "failures": 0,
+        "latency_ms": 582,
+        "average_latency_ms_per_call": 6.06,
+        "cost": 96.0
+      },
+      "v3": {
+        "solve_rate": 1.0,
+        "step_success_rate": 1.0,
+        "total_tool_calls": 72,
+        "unnecessary_tool_calls": 0,
+        "unnecessary_call_rate": 0.0,
+        "failures": 0,
+        "latency_ms": 453,
+        "average_latency_ms_per_call": 6.29,
+        "cost": 72.0
+      }
+    },
+    "gen_unseen": {
+      "v1": {
+        "solve_rate": 0.0,
+        "step_success_rate": 0.0,
+        "total_tool_calls": 264,
+        "unnecessary_tool_calls": 264,
+        "unnecessary_call_rate": 1.0,
+        "failures": 126,
+        "latency_ms": 3606,
+        "average_latency_ms_per_call": 13.66,
+        "cost": 400.8
+      },
+      "v2": {
+        "solve_rate": 0.3333,
+        "step_success_rate": 0.8182,
+        "total_tool_calls": 120,
+        "unnecessary_tool_calls": 48,
+        "unnecessary_call_rate": 0.4,
+        "failures": 0,
+        "latency_ms": 726,
+        "average_latency_ms_per_call": 6.05,
+        "cost": 120.0
+      },
+      "v3": {
+        "solve_rate": 1.0,
+        "step_success_rate": 1.0,
+        "total_tool_calls": 88,
+        "unnecessary_tool_calls": 0,
+        "unnecessary_call_rate": 0.0,
+        "failures": 0,
+        "latency_ms": 557,
+        "average_latency_ms_per_call": 6.33,
+        "cost": 88.0
+      }
+    }
+  },
+  "per_suite": {
+    "ci.build": {
+      "title": "Flaky CI build investigation",
+      "stages": {
+        "v1": {
+          "agent_version": 1,
+          "eval": {
+            "solve_rate": 0.0,
+            "step_success_rate": 0.0,
+            "total_tool_calls": 54,
+            "unnecessary_tool_calls": 54,
+            "unnecessary_call_rate": 1.0,
+            "failures": 30,
+            "latency_ms": 747,
+            "average_latency_ms_per_call": 13.83,
+            "cost": 82.5
+          },
+          "gen": {
+            "solve_rate": 0.0,
+            "step_success_rate": 0.0,
+            "total_tool_calls": 66,
+            "unnecessary_tool_calls": 66,
+            "unnecessary_call_rate": 1.0,
+            "failures": 36,
+            "latency_ms": 912,
+            "average_latency_ms_per_call": 13.82,
+            "cost": 100.8
+          }
+        },
+        "v2": {
+          "agent_version": 13,
+          "eval": {
+            "solve_rate": 0.4,
+            "step_success_rate": 0.8333,
+            "total_tool_calls": 24,
+            "unnecessary_tool_calls": 9,
+            "unnecessary_call_rate": 0.375,
+            "failures": 0,
+            "latency_ms": 135,
+            "average_latency_ms_per_call": 5.62,
+            "cost": 24.0
+          },
+          "gen": {
+            "solve_rate": 0.3333,
+            "step_success_rate": 0.8182,
+            "total_tool_calls": 30,
+            "unnecessary_tool_calls": 12,
+            "unnecessary_call_rate": 0.4,
+            "failures": 0,
+            "latency_ms": 168,
+            "average_latency_ms_per_call": 5.6,
+            "cost": 30.0
+          }
+        },
+        "v3": {
+          "agent_version": 41,
+          "eval": {
+            "solve_rate": 1.0,
+            "step_success_rate": 1.0,
+            "total_tool_calls": 18,
+            "unnecessary_tool_calls": 0,
+            "unnecessary_call_rate": 0.0,
+            "failures": 0,
+            "latency_ms": 108,
+            "average_latency_ms_per_call": 6.0,
+            "cost": 18.0
+          },
+          "gen": {
+            "solve_rate": 1.0,
+            "step_success_rate": 1.0,
+            "total_tool_calls": 22,
+            "unnecessary_tool_calls": 0,
+            "unnecessary_call_rate": 0.0,
+            "failures": 0,
+            "latency_ms": 132,
+            "average_latency_ms_per_call": 6.0,
+            "cost": 22.0
+          }
+        }
+      },
+      "training": {
+        "phase_a": {
+          "turns": 12,
+          "successes": 3,
+          "failures": 9,
+          "strategy_updates": 21,
+          "version_before": 1,
+          "version_after": 13,
+          "category_selections": {
+            "investigate.ci.dependencies": {
+              "ci.artifacts.fetch": 1,
+              "ci.deps.resolve": 2
+            },
+            "investigate.ci.test_flakiness": {
+              "ci.cache.inspect": 1,
+              "ci.deps.resolve": 1,
+              "ci.tests.analyze": 1
+            },
+            "investigate.ci.runner_health": {
+              "ci.branch.log": 1,
+              "ci.deps.resolve": 1,
+              "ci.tests.analyze": 1
+            },
+            "investigate.ci.config_drift": {
+              "ci.secret.scan": 1,
+              "ci.deps.resolve": 1,
+              "ci.tests.analyze": 1
+            }
+          }
+        },
+        "phase_b": {
+          "turns": 28,
+          "successes": 27,
+          "failures": 1,
+          "strategy_updates": 29,
+          "version_before": 13,
+          "version_after": 41,
+          "category_selections": {
+            "investigate.ci.dependencies": {
+              "ci.deps.resolve": 7
+            },
+            "investigate.ci.test_flakiness": {
+              "ci.tests.analyze": 7
+            },
+            "investigate.ci.runner_health": {
+              "ci.runner.status": 7
+            },
+            "investigate.ci.config_drift": {
+              "ci.runner.status": 1,
+              "ci.config.read": 6
+            }
+          }
+        }
+      }
+    },
+    "sre.outage": {
+      "title": "Production outage triage",
+      "stages": {
+        "v1": {
+          "agent_version": 1,
+          "eval": {
+            "solve_rate": 0.0,
+            "step_success_rate": 0.0,
+            "total_tool_calls": 54,
+            "unnecessary_tool_calls": 54,
+            "unnecessary_call_rate": 1.0,
+            "failures": 24,
+            "latency_ms": 738,
+            "average_latency_ms_per_call": 13.67,
+            "cost": 82.8
+          },
+          "gen": {
+            "solve_rate": 0.0,
+            "step_success_rate": 0.0,
+            "total_tool_calls": 66,
+            "unnecessary_tool_calls": 66,
+            "unnecessary_call_rate": 1.0,
+            "failures": 30,
+            "latency_ms": 906,
+            "average_latency_ms_per_call": 13.73,
+            "cost": 101.4
+          }
+        },
+        "v2": {
+          "agent_version": 13,
+          "eval": {
+            "solve_rate": 0.4,
+            "step_success_rate": 0.8333,
+            "total_tool_calls": 24,
+            "unnecessary_tool_calls": 9,
+            "unnecessary_call_rate": 0.375,
+            "failures": 0,
+            "latency_ms": 149,
+            "average_latency_ms_per_call": 6.21,
+            "cost": 24.0
+          },
+          "gen": {
+            "solve_rate": 0.3333,
+            "step_success_rate": 0.8182,
+            "total_tool_calls": 30,
+            "unnecessary_tool_calls": 12,
+            "unnecessary_call_rate": 0.4,
+            "failures": 0,
+            "latency_ms": 186,
+            "average_latency_ms_per_call": 6.2,
+            "cost": 30.0
+          }
+        },
+        "v3": {
+          "agent_version": 41,
+          "eval": {
+            "solve_rate": 1.0,
+            "step_success_rate": 1.0,
+            "total_tool_calls": 18,
+            "unnecessary_tool_calls": 0,
+            "unnecessary_call_rate": 0.0,
+            "failures": 0,
+            "latency_ms": 119,
+            "average_latency_ms_per_call": 6.61,
+            "cost": 18.0
+          },
+          "gen": {
+            "solve_rate": 1.0,
+            "step_success_rate": 1.0,
+            "total_tool_calls": 22,
+            "unnecessary_tool_calls": 0,
+            "unnecessary_call_rate": 0.0,
+            "failures": 0,
+            "latency_ms": 149,
+            "average_latency_ms_per_call": 6.77,
+            "cost": 22.0
+          }
+        }
+      },
+      "training": {
+        "phase_a": {
+          "turns": 12,
+          "successes": 3,
+          "failures": 9,
+          "strategy_updates": 21,
+          "version_before": 1,
+          "version_after": 13,
+          "category_selections": {
+            "investigate.sre.service_status": {
+              "svc.env": 1,
+              "svc.status": 2
+            },
+            "investigate.sre.region_load": {
+              "metric.host": 1,
+              "svc.status": 1,
+              "metric.region": 1
+            },
+            "investigate.sre.config_drift": {
+              "config.backup": 1,
+              "svc.status": 1,
+              "metric.region": 1
+            },
+            "investigate.sre.recent_deploys": {
+              "deploy.env": 1,
+              "svc.status": 1,
+              "metric.region": 1
+            }
+          }
+        },
+        "phase_b": {
+          "turns": 28,
+          "successes": 27,
+          "failures": 1,
+          "strategy_updates": 29,
+          "version_before": 13,
+          "version_after": 41,
+          "category_selections": {
+            "investigate.sre.service_status": {
+              "svc.status": 7
+            },
+            "investigate.sre.region_load": {
+              "metric.region": 7
+            },
+            "investigate.sre.config_drift": {
+              "config.diff": 7
+            },
+            "investigate.sre.recent_deploys": {
+              "config.diff": 1,
+              "deploy.history": 6
+            }
+          }
+        }
+      }
+    },
+    "debug.segfault": {
+      "title": "Native crash debugging",
+      "stages": {
+        "v1": {
+          "agent_version": 1,
+          "eval": {
+            "solve_rate": 0.0,
+            "step_success_rate": 0.0,
+            "total_tool_calls": 54,
+            "unnecessary_tool_calls": 54,
+            "unnecessary_call_rate": 1.0,
+            "failures": 24,
+            "latency_ms": 748,
+            "average_latency_ms_per_call": 13.85,
+            "cost": 82.2
+          },
+          "gen": {
+            "solve_rate": 0.0,
+            "step_success_rate": 0.0,
+            "total_tool_calls": 66,
+            "unnecessary_tool_calls": 66,
+            "unnecessary_call_rate": 1.0,
+            "failures": 30,
+            "latency_ms": 918,
+            "average_latency_ms_per_call": 13.91,
+            "cost": 100.8
+          }
+        },
+        "v2": {
+          "agent_version": 13,
+          "eval": {
+            "solve_rate": 0.4,
+            "step_success_rate": 0.8333,
+            "total_tool_calls": 24,
+            "unnecessary_tool_calls": 9,
+            "unnecessary_call_rate": 0.375,
+            "failures": 0,
+            "latency_ms": 145,
+            "average_latency_ms_per_call": 6.04,
+            "cost": 24.0
+          },
+          "gen": {
+            "solve_rate": 0.3333,
+            "step_success_rate": 0.8182,
+            "total_tool_calls": 30,
+            "unnecessary_tool_calls": 12,
+            "unnecessary_call_rate": 0.4,
+            "failures": 0,
+            "latency_ms": 180,
+            "average_latency_ms_per_call": 6.0,
+            "cost": 30.0
+          }
+        },
+        "v3": {
+          "agent_version": 41,
+          "eval": {
+            "solve_rate": 1.0,
+            "step_success_rate": 1.0,
+            "total_tool_calls": 18,
+            "unnecessary_tool_calls": 0,
+            "unnecessary_call_rate": 0.0,
+            "failures": 0,
+            "latency_ms": 118,
+            "average_latency_ms_per_call": 6.56,
+            "cost": 18.0
+          },
+          "gen": {
+            "solve_rate": 1.0,
+            "step_success_rate": 1.0,
+            "total_tool_calls": 22,
+            "unnecessary_tool_calls": 0,
+            "unnecessary_call_rate": 0.0,
+            "failures": 0,
+            "latency_ms": 144,
+            "average_latency_ms_per_call": 6.55,
+            "cost": 22.0
+          }
+        }
+      },
+      "training": {
+        "phase_a": {
+          "turns": 12,
+          "successes": 3,
+          "failures": 9,
+          "strategy_updates": 21,
+          "version_before": 1,
+          "version_after": 13,
+          "category_selections": {
+            "investigate.debug.stack_trace": {
+              "trace.symbols": 1,
+              "trace.dump": 2
+            },
+            "investigate.debug.memory": {
+              "mem.gc": 1,
+              "trace.dump": 1,
+              "mem.profile": 1
+            },
+            "investigate.debug.binary_version": {
+              "deploy.manifest": 1,
+              "trace.dump": 1,
+              "mem.profile": 1
+            },
+            "investigate.debug.core_dumps": {
+              "core.symsrv": 1,
+              "trace.dump": 1,
+              "mem.profile": 1
+            }
+          }
+        },
+        "phase_b": {
+          "turns": 28,
+          "successes": 27,
+          "failures": 1,
+          "strategy_updates": 29,
+          "version_before": 13,
+          "version_after": 41,
+          "category_selections": {
+            "investigate.debug.stack_trace": {
+              "trace.dump": 7
+            },
+            "investigate.debug.memory": {
+              "mem.profile": 7
+            },
+            "investigate.debug.binary_version": {
+              "deploy.binary": 7
+            },
+            "investigate.debug.core_dumps": {
+              "deploy.binary": 1,
+              "core.files": 6
+            }
+          }
+        }
+      }
+    },
+    "perf.regression": {
+      "title": "Latency regression hunt",
+      "stages": {
+        "v1": {
+          "agent_version": 1,
+          "eval": {
+            "solve_rate": 0.0,
+            "step_success_rate": 0.0,
+            "total_tool_calls": 54,
+            "unnecessary_tool_calls": 54,
+            "unnecessary_call_rate": 1.0,
+            "failures": 24,
+            "latency_ms": 708,
+            "average_latency_ms_per_call": 13.11,
+            "cost": 79.8
+          },
+          "gen": {
+            "solve_rate": 0.0,
+            "step_success_rate": 0.0,
+            "total_tool_calls": 66,
+            "unnecessary_tool_calls": 66,
+            "unnecessary_call_rate": 1.0,
+            "failures": 30,
+            "latency_ms": 870,
+            "average_latency_ms_per_call": 13.18,
+            "cost": 97.8
+          }
+        },
+        "v2": {
+          "agent_version": 13,
+          "eval": {
+            "solve_rate": 0.4,
+            "step_success_rate": 0.8333,
+            "total_tool_calls": 24,
+            "unnecessary_tool_calls": 9,
+            "unnecessary_call_rate": 0.375,
+            "failures": 0,
+            "latency_ms": 153,
+            "average_latency_ms_per_call": 6.38,
+            "cost": 24.0
+          },
+          "gen": {
+            "solve_rate": 0.3333,
+            "step_success_rate": 0.8182,
+            "total_tool_calls": 30,
+            "unnecessary_tool_calls": 12,
+            "unnecessary_call_rate": 0.4,
+            "failures": 0,
+            "latency_ms": 192,
+            "average_latency_ms_per_call": 6.4,
+            "cost": 30.0
+          }
+        },
+        "v3": {
+          "agent_version": 41,
+          "eval": {
+            "solve_rate": 1.0,
+            "step_success_rate": 1.0,
+            "total_tool_calls": 18,
+            "unnecessary_tool_calls": 0,
+            "unnecessary_call_rate": 0.0,
+            "failures": 0,
+            "latency_ms": 108,
+            "average_latency_ms_per_call": 6.0,
+            "cost": 18.0
+          },
+          "gen": {
+            "solve_rate": 1.0,
+            "step_success_rate": 1.0,
+            "total_tool_calls": 22,
+            "unnecessary_tool_calls": 0,
+            "unnecessary_call_rate": 0.0,
+            "failures": 0,
+            "latency_ms": 132,
+            "average_latency_ms_per_call": 6.0,
+            "cost": 22.0
+          }
+        }
+      },
+      "training": {
+        "phase_a": {
+          "turns": 12,
+          "successes": 3,
+          "failures": 9,
+          "strategy_updates": 21,
+          "version_before": 1,
+          "version_after": 13,
+          "category_selections": {
+            "investigate.perf.p95_latency": {
+              "latency.avg": 1,
+              "latency.p95": 2
+            },
+            "investigate.perf.connections": {
+              "conn.handshake": 1,
+              "latency.p95": 1,
+              "conn.count": 1
+            },
+            "investigate.perf.lock_contention": {
+              "lock.waits": 1,
+              "latency.p95": 1,
+              "conn.count": 1
+            },
+            "investigate.perf.queue_depth": {
+              "queue.jitter": 1,
+              "latency.p95": 1,
+              "conn.count": 1
+            }
+          }
+        },
+        "phase_b": {
+          "turns": 28,
+          "successes": 27,
+          "failures": 1,
+          "strategy_updates": 29,
+          "version_before": 13,
+          "version_after": 41,
+          "category_selections": {
+            "investigate.perf.p95_latency": {
+              "latency.p95": 7
+            },
+            "investigate.perf.connections": {
+              "conn.count": 7
+            },
+            "investigate.perf.lock_contention": {
+              "lock.stats": 7
+            },
+            "investigate.perf.queue_depth": {
+              "lock.stats": 1,
+              "queue.depth": 6
+            }
+          }
+        }
+      }
+    }
+  }
+}

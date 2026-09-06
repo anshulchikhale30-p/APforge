@@ -222,3 +222,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# APforge benchmark artifacts: per-suite SQLite databases (plus WAL sidecars)
+*.apforge.db
+*.apforge.db-wal
+*.apforge.db-shm
