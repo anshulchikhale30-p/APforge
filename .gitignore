@@ -61,6 +61,12 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
+# APforge default SQLite database (plus WAL sidecars)
+apforge.db
+apforge.db-wal
+apforge.db-shm
+*.apforge.db
+
 # Flask stuff:
 instance/
 .webassets-cache
