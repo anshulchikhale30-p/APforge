@@ -17,10 +17,13 @@ from .db import Database
 from .evaluation import RuleEvaluator
 from .memory import ToolUseMemory
 from .models import (
+    Evaluation,
     ExecutionTrace,
     Observation,
     Reflection,
+    StrategyUpdate,
     TaskSpec,
+    ToolMemory,
     TurnResult,
     utcnow_iso,
 )
@@ -90,13 +93,13 @@ class LearningEngine:
         self,
         observation: Observation,
         criteria: Optional[dict] = None,
-    ) -> object:
+    ) -> Evaluation:
         """EVALUATE: score the outcome against task criteria."""
         return self.evaluator.evaluate(observation, criteria=criteria)
 
     def reflect(
         self,
-        evaluation: object,
+        evaluation: Evaluation,
         observation: Observation,
         agent_id: str,
         task_type: str,
@@ -113,7 +116,7 @@ class LearningEngine:
             strategy_engine=self.strategy,
         )
 
-    def remember(self, trace: ExecutionTrace, evaluation: object) -> object:
+    def remember(self, trace: ExecutionTrace, evaluation: Evaluation) -> ToolMemory:
         """REMEMBER: persist tool-use memory for this turn."""
         return self.memory.record(
             trace.agent_id,
@@ -128,9 +131,9 @@ class LearningEngine:
         agent_id: str,
         task_type: str,
         trace: ExecutionTrace,
-        evaluation: object,
+        evaluation: Evaluation,
         reflection: Reflection,
-    ) -> tuple[list, Optional[str]]:
+    ) -> tuple[list[StrategyUpdate], Optional[str]]:
         """CHANGE STRATEGY: apply deltas and record a new agent version if changed."""
         updates = self.strategy.update(
             agent_id, task_type, trace, evaluation, reflection
@@ -158,6 +161,9 @@ class LearningEngine:
         reflection = self.reflect(
             evaluation, observation, agent_id, task.task_type, trace.tool_name
         )
+        # Persist the full trace -> evaluation -> reflection chain.
+        self.db.insert_evaluation(evaluation)
+        self.db.insert_reflection(reflection)
         self.remember(trace, evaluation)
         updates, version_reason = self.change_strategy(
             agent_id, task.task_type, trace, evaluation, reflection
