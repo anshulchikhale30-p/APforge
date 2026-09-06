@@ -24,6 +24,7 @@ from .models import (
     StrategyUpdate,
     TaskSpec,
     ToolMemory,
+    ToolSelection,
     TurnResult,
     utcnow_iso,
 )
@@ -51,7 +52,9 @@ class LearningEngine:
 
     # ------------------------------------------------------------------ phases
 
-    def use(self, agent_id: str, task_type: str, tool_input: Optional[object] = None):
+    def use(
+        self, agent_id: str, task_type: str, tool_input: Optional[object] = None
+    ) -> tuple[ToolSelection, ExecutionTrace]:
         """USE: select a tool via the strategy engine and execute it."""
         agent = self.db.get_agent(agent_id)
         if agent is None:
