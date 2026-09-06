@@ -2,7 +2,7 @@
 
 Experiment: **V1 -> experience -> learning -> V2 -> learning -> V3**
 
-Generated: 2026-09-06T02:30:36.690023+00:00  |  Suites: 4  |  Deterministic (fixed seeds)
+Generated: 2026-09-06T04:09:44.580762+00:00  |  Suites: 4  |  Deterministic (fixed seeds)
 
 ## Headline metrics (all suites, measured from real executions)
 
@@ -14,8 +14,8 @@ Generated: 2026-09-06T02:30:36.690023+00:00  |  Suites: 4  |  Deterministic (fix
 | total tool calls | 216 | 96 | 72 |
 | unnecessary tool calls | 216 | 36 | 0 |
 | failures | 102 | 0 | 0 |
-| latency (total ms) | 2941 | 582 | 453 |
-| avg latency / call (ms) | 13.62 | 6.06 | 6.29 |
+| latency (total ms) | 2943 | 582 | 454 |
+| avg latency / call (ms) | 13.62 | 6.06 | 6.31 |
 | modeled cost | 327.30 | 96.00 | 72.00 |
 
 | **unseen gen instances** |  |  |  |
@@ -24,8 +24,8 @@ Generated: 2026-09-06T02:30:36.690023+00:00  |  Suites: 4  |  Deterministic (fix
 | total tool calls | 264 | 120 | 88 |
 | unnecessary tool calls | 264 | 48 | 0 |
 | failures | 126 | 0 | 0 |
-| latency (total ms) | 3606 | 726 | 557 |
-| avg latency / call (ms) | 13.66 | 6.05 | 6.33 |
+| latency (total ms) | 3612 | 731 | 554 |
+| avg latency / call (ms) | 13.68 | 6.09 | 6.3 |
 | modeled cost | 400.80 | 120.00 | 88.00 |
 
 ## Generalization experiment (transfer of learned strategies)
@@ -43,10 +43,10 @@ V1/V2/V3 were measured on **unseen instances** (bundles never executed during tr
 
 - On the held-out investigation instances, scenario solve rate rose from 0.0% (V1) to 40.0% (V2) to 100.0% (V3).
 - Unnecessary tool calls on held-out instances fell from 216 (V1) to 36 (V2) to 0 (V3); total tool calls from 216 to 96 to 72.
-- Failures on held-out instances: V1 102, V2 0, V3 0. Measured latency: 2941ms -> 582ms -> 453ms (avg per call 13.62ms -> 6.06ms -> 6.29ms). Modeled cost: 327.30 -> 96.00 -> 72.00.
+- Failures on held-out instances: V1 102, V2 0, V3 0. Measured latency: 2943ms -> 582ms -> 454ms (avg per call 13.62ms -> 6.06ms -> 6.31ms). Modeled cost: 327.30 -> 96.00 -> 72.00.
 - On the unseen investigation instances, scenario solve rate rose from 0.0% (V1) to 33.3% (V2) to 100.0% (V3).
 - Unnecessary tool calls on unseen instances fell from 264 (V1) to 48 (V2) to 0 (V3); total tool calls from 264 to 120 to 88.
-- Failures on unseen instances: V1 126, V2 0, V3 0. Measured latency: 3606ms -> 726ms -> 557ms (avg per call 13.66ms -> 6.05ms -> 6.33ms). Modeled cost: 400.80 -> 120.00 -> 88.00.
+- Failures on unseen instances: V1 126, V2 0, V3 0. Measured latency: 3612ms -> 731ms -> 554ms (avg per call 13.68ms -> 6.09ms -> 6.3ms). Modeled cost: 400.80 -> 120.00 -> 88.00.
 
 ## Per-suite stage snapshots (agent version + tool call breakdown)
 

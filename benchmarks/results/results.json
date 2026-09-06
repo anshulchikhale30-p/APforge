@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-06T02:30:36.690023+00:00",
+  "generated_at": "2026-09-06T04:09:44.580762+00:00",
   "experiment": "V1 -> experience -> learning -> V2 -> learning -> V3",
   "engine": {
     "name": "APforge core learning engine",
@@ -781,8 +781,8 @@
             "unnecessary_tool_calls": 66,
             "unnecessary_call_rate": 1.0,
             "failures": 36,
-            "latency_ms": 912,
-            "average_latency_ms_per_call": 13.82,
+            "latency_ms": 913,
+            "average_latency_ms_per_call": 13.83,
             "cost": 100.8,
             "average_cost_per_solved_scenario": 0.0,
             "tool_call_breakdown": {
@@ -801,7 +801,7 @@
               "total_calls": 12,
               "unnecessary_calls": 12,
               "failure_calls": 6,
-              "latency_ms": 165,
+              "latency_ms": 166,
               "cost": 18.3,
               "calls": [
                 {
@@ -867,7 +867,7 @@
                   "status": "success",
                   "evaluation_success": false,
                   "unnecessary": true,
-                  "duration_ms": 12,
+                  "duration_ms": 13,
                   "cost": 1.4
                 },
                 {
@@ -2398,8 +2398,8 @@
             "unnecessary_tool_calls": 0,
             "unnecessary_call_rate": 0.0,
             "failures": 0,
-            "latency_ms": 108,
-            "average_latency_ms_per_call": 6.0,
+            "latency_ms": 109,
+            "average_latency_ms_per_call": 6.06,
             "cost": 18.0,
             "average_cost_per_solved_scenario": 3.6,
             "tool_call_breakdown": {
@@ -2624,7 +2624,7 @@
               "total_calls": 4,
               "unnecessary_calls": 0,
               "failure_calls": 0,
-              "latency_ms": 24,
+              "latency_ms": 25,
               "cost": 4.0,
               "calls": [
                 {
@@ -2657,7 +2657,7 @@
                   "status": "success",
                   "evaluation_success": true,
                   "unnecessary": false,
-                  "duration_ms": 5,
+                  "duration_ms": 6,
                   "cost": 1.0
                 },
                 {
@@ -3151,8 +3151,8 @@
             "unnecessary_tool_calls": 54,
             "unnecessary_call_rate": 1.0,
             "failures": 24,
-            "latency_ms": 738,
-            "average_latency_ms_per_call": 13.67,
+            "latency_ms": 740,
+            "average_latency_ms_per_call": 13.7,
             "cost": 82.8,
             "average_cost_per_solved_scenario": 0.0,
             "tool_call_breakdown": {
@@ -3171,7 +3171,7 @@
               "total_calls": 9,
               "unnecessary_calls": 9,
               "failure_calls": 3,
-              "latency_ms": 117,
+              "latency_ms": 118,
               "cost": 13.5,
               "calls": [
                 {
@@ -3248,7 +3248,7 @@
                   "status": "success",
                   "evaluation_success": false,
                   "unnecessary": true,
-                  "duration_ms": 13,
+                  "duration_ms": 14,
                   "cost": 1.5
                 },
                 {
@@ -3573,7 +3573,7 @@
               "total_calls": 9,
               "unnecessary_calls": 9,
               "failure_calls": 3,
-              "latency_ms": 117,
+              "latency_ms": 118,
               "cost": 13.5,
               "calls": [
                 {
@@ -3650,7 +3650,7 @@
                   "status": "success",
                   "evaluation_success": false,
                   "unnecessary": true,
-                  "duration_ms": 13,
+                  "duration_ms": 14,
                   "cost": 1.5
                 },
                 {
@@ -3834,8 +3834,8 @@
             "unnecessary_tool_calls": 66,
             "unnecessary_call_rate": 1.0,
             "failures": 30,
-            "latency_ms": 906,
-            "average_latency_ms_per_call": 13.73,
+            "latency_ms": 907,
+            "average_latency_ms_per_call": 13.74,
             "cost": 101.4,
             "average_cost_per_solved_scenario": 0.0,
             "tool_call_breakdown": {
@@ -4111,7 +4111,7 @@
               "total_calls": 12,
               "unnecessary_calls": 12,
               "failure_calls": 6,
-              "latency_ms": 168,
+              "latency_ms": 169,
               "cost": 18.6,
               "calls": [
                 {
@@ -4177,7 +4177,7 @@
                   "status": "success",
                   "evaluation_success": false,
                   "unnecessary": true,
-                  "duration_ms": 13,
+                  "duration_ms": 14,
                   "cost": 1.5
                 },
                 {
@@ -5017,8 +5017,8 @@
             "unnecessary_tool_calls": 12,
             "unnecessary_call_rate": 0.4,
             "failures": 0,
-            "latency_ms": 186,
-            "average_latency_ms_per_call": 6.2,
+            "latency_ms": 187,
+            "average_latency_ms_per_call": 6.23,
             "cost": 30.0,
             "average_cost_per_solved_scenario": 15.0,
             "tool_call_breakdown": {
@@ -5161,7 +5161,7 @@
               "total_calls": 6,
               "unnecessary_calls": 3,
               "failure_calls": 0,
-              "latency_ms": 37,
+              "latency_ms": 38,
               "cost": 6.0,
               "calls": [
                 {
@@ -5216,7 +5216,7 @@
                   "status": "success",
                   "evaluation_success": false,
                   "unnecessary": true,
-                  "duration_ms": 6,
+                  "duration_ms": 7,
                   "cost": 1.0
                 },
                 {
@@ -5738,8 +5738,8 @@
             "unnecessary_tool_calls": 0,
             "unnecessary_call_rate": 0.0,
             "failures": 0,
-            "latency_ms": 149,
-            "average_latency_ms_per_call": 6.77,
+            "latency_ms": 146,
+            "average_latency_ms_per_call": 6.64,
             "cost": 22.0,
             "average_cost_per_solved_scenario": 3.6667,
             "tool_call_breakdown": {
@@ -5861,7 +5861,7 @@
               "total_calls": 4,
               "unnecessary_calls": 0,
               "failure_calls": 0,
-              "latency_ms": 30,
+              "latency_ms": 27,
               "cost": 4.0,
               "calls": [
                 {
@@ -5872,7 +5872,7 @@
                   "status": "success",
                   "evaluation_success": true,
                   "unnecessary": false,
-                  "duration_ms": 10,
+                  "duration_ms": 7,
                   "cost": 1.0
                 },
                 {
@@ -6204,8 +6204,8 @@
             "unnecessary_tool_calls": 54,
             "unnecessary_call_rate": 1.0,
             "failures": 24,
-            "latency_ms": 748,
-            "average_latency_ms_per_call": 13.85,
+            "latency_ms": 747,
+            "average_latency_ms_per_call": 13.83,
             "cost": 82.2,
             "average_cost_per_solved_scenario": 0.0,
             "tool_call_breakdown": {
@@ -6336,7 +6336,7 @@
               "total_calls": 12,
               "unnecessary_calls": 12,
               "failure_calls": 6,
-              "latency_ms": 172,
+              "latency_ms": 171,
               "cost": 18.6,
               "calls": [
                 {
@@ -6468,7 +6468,7 @@
                   "status": "error",
                   "evaluation_success": false,
                   "unnecessary": true,
-                  "duration_ms": 19,
+                  "duration_ms": 18,
                   "cost": 1.8
                 }
               ]
@@ -6887,8 +6887,8 @@
             "unnecessary_tool_calls": 66,
             "unnecessary_call_rate": 1.0,
             "failures": 30,
-            "latency_ms": 918,
-            "average_latency_ms_per_call": 13.91,
+            "latency_ms": 919,
+            "average_latency_ms_per_call": 13.92,
             "cost": 100.8,
             "average_cost_per_solved_scenario": 0.0,
             "tool_call_breakdown": {
@@ -7309,7 +7309,7 @@
               "total_calls": 12,
               "unnecessary_calls": 12,
               "failure_calls": 6,
-              "latency_ms": 171,
+              "latency_ms": 172,
               "cost": 18.6,
               "calls": [
                 {
@@ -7408,7 +7408,7 @@
                   "status": "success",
                   "evaluation_success": false,
                   "unnecessary": true,
-                  "duration_ms": 11,
+                  "duration_ms": 12,
                   "cost": 1.3
                 },
                 {
@@ -8070,8 +8070,8 @@
             "unnecessary_tool_calls": 12,
             "unnecessary_call_rate": 0.4,
             "failures": 0,
-            "latency_ms": 180,
-            "average_latency_ms_per_call": 6.0,
+            "latency_ms": 183,
+            "average_latency_ms_per_call": 6.1,
             "cost": 30.0,
             "average_cost_per_solved_scenario": 15.0,
             "tool_call_breakdown": {
@@ -8293,7 +8293,7 @@
               "total_calls": 6,
               "unnecessary_calls": 3,
               "failure_calls": 0,
-              "latency_ms": 35,
+              "latency_ms": 38,
               "cost": 6.0,
               "calls": [
                 {
@@ -8304,7 +8304,7 @@
                   "status": "success",
                   "evaluation_success": true,
                   "unnecessary": false,
-                  "duration_ms": 8,
+                  "duration_ms": 9,
                   "cost": 1.0
                 },
                 {
@@ -8348,7 +8348,7 @@
                   "status": "success",
                   "evaluation_success": false,
                   "unnecessary": true,
-                  "duration_ms": 5,
+                  "duration_ms": 7,
                   "cost": 1.0
                 },
                 {
@@ -9257,8 +9257,8 @@
             "unnecessary_tool_calls": 54,
             "unnecessary_call_rate": 1.0,
             "failures": 24,
-            "latency_ms": 708,
-            "average_latency_ms_per_call": 13.11,
+            "latency_ms": 709,
+            "average_latency_ms_per_call": 13.13,
             "cost": 79.8,
             "average_cost_per_solved_scenario": 0.0,
             "tool_call_breakdown": {
@@ -9389,7 +9389,7 @@
               "total_calls": 12,
               "unnecessary_calls": 12,
               "failure_calls": 6,
-              "latency_ms": 162,
+              "latency_ms": 163,
               "cost": 18.0,
               "calls": [
                 {
@@ -9521,7 +9521,7 @@
                   "status": "error",
                   "evaluation_success": false,
                   "unnecessary": true,
-                  "duration_ms": 17,
+                  "duration_ms": 18,
                   "cost": 1.7
                 }
               ]
@@ -9940,8 +9940,8 @@
             "unnecessary_tool_calls": 66,
             "unnecessary_call_rate": 1.0,
             "failures": 30,
-            "latency_ms": 870,
-            "average_latency_ms_per_call": 13.18,
+            "latency_ms": 873,
+            "average_latency_ms_per_call": 13.23,
             "cost": 97.8,
             "average_cost_per_solved_scenario": 0.0,
             "tool_call_breakdown": {
@@ -10217,7 +10217,7 @@
               "total_calls": 12,
               "unnecessary_calls": 12,
               "failure_calls": 6,
-              "latency_ms": 162,
+              "latency_ms": 163,
               "cost": 18.0,
               "calls": [
                 {
@@ -10349,7 +10349,7 @@
                   "status": "success",
                   "evaluation_success": false,
                   "unnecessary": true,
-                  "duration_ms": 10,
+                  "duration_ms": 11,
                   "cost": 1.3
                 }
               ]
@@ -10362,7 +10362,7 @@
               "total_calls": 12,
               "unnecessary_calls": 12,
               "failure_calls": 6,
-              "latency_ms": 162,
+              "latency_ms": 164,
               "cost": 18.0,
               "calls": [
                 {
@@ -10428,7 +10428,7 @@
                   "status": "error",
                   "evaluation_success": false,
                   "unnecessary": true,
-                  "duration_ms": 15,
+                  "duration_ms": 16,
                   "cost": 1.6
                 },
                 {
@@ -10439,7 +10439,7 @@
                   "status": "success",
                   "evaluation_success": false,
                   "unnecessary": true,
-                  "duration_ms": 12,
+                  "duration_ms": 13,
                   "cost": 1.4
                 },
                 {
@@ -11123,8 +11123,8 @@
             "unnecessary_tool_calls": 12,
             "unnecessary_call_rate": 0.4,
             "failures": 0,
-            "latency_ms": 192,
-            "average_latency_ms_per_call": 6.4,
+            "latency_ms": 193,
+            "average_latency_ms_per_call": 6.43,
             "cost": 30.0,
             "average_cost_per_solved_scenario": 15.0,
             "tool_call_breakdown": {
@@ -11471,7 +11471,7 @@
               "total_calls": 6,
               "unnecessary_calls": 3,
               "failure_calls": 0,
-              "latency_ms": 39,
+              "latency_ms": 40,
               "cost": 6.0,
               "calls": [
                 {
@@ -11493,7 +11493,7 @@
                   "status": "success",
                   "evaluation_success": true,
                   "unnecessary": false,
-                  "duration_ms": 5,
+                  "duration_ms": 6,
                   "cost": 1.0
                 },
                 {
@@ -12246,7 +12246,7 @@
         "unnecessary_tool_calls": 216,
         "unnecessary_call_rate": 1.0,
         "failures": 102,
-        "latency_ms": 2941,
+        "latency_ms": 2943,
         "average_latency_ms_per_call": 13.62,
         "cost": 327.3,
         "average_cost_per_solved_scenario": 0.0
@@ -12274,8 +12274,8 @@
         "unnecessary_tool_calls": 0,
         "unnecessary_call_rate": 0.0,
         "failures": 0,
-        "latency_ms": 453,
-        "average_latency_ms_per_call": 6.29,
+        "latency_ms": 454,
+        "average_latency_ms_per_call": 6.31,
         "cost": 72.0,
         "average_cost_per_solved_scenario": 3.6
       }
@@ -12290,8 +12290,8 @@
         "unnecessary_tool_calls": 264,
         "unnecessary_call_rate": 1.0,
         "failures": 126,
-        "latency_ms": 3606,
-        "average_latency_ms_per_call": 13.66,
+        "latency_ms": 3612,
+        "average_latency_ms_per_call": 13.68,
         "cost": 400.8,
         "average_cost_per_solved_scenario": 0.0
       },
@@ -12304,8 +12304,8 @@
         "unnecessary_tool_calls": 48,
         "unnecessary_call_rate": 0.4,
         "failures": 0,
-        "latency_ms": 726,
-        "average_latency_ms_per_call": 6.05,
+        "latency_ms": 731,
+        "average_latency_ms_per_call": 6.09,
         "cost": 120.0,
         "average_cost_per_solved_scenario": 15.0
       },
@@ -12318,8 +12318,8 @@
         "unnecessary_tool_calls": 0,
         "unnecessary_call_rate": 0.0,
         "failures": 0,
-        "latency_ms": 557,
-        "average_latency_ms_per_call": 6.33,
+        "latency_ms": 554,
+        "average_latency_ms_per_call": 6.3,
         "cost": 88.0,
         "average_cost_per_solved_scenario": 3.6667
       }
@@ -12327,7 +12327,7 @@
   },
   "summary": {
     "experiment": "V1 -> experience -> learning -> V2 -> learning -> V3",
-    "generated_at": "2026-09-06T02:30:36.690023+00:00",
+    "generated_at": "2026-09-06T04:09:44.580762+00:00",
     "schema_version": "1.0",
     "notes": [
       "All metrics come from real executions of the harness in this run.",
@@ -12346,7 +12346,7 @@
           "unnecessary_tool_calls": 216,
           "unnecessary_call_rate": 1.0,
           "failures": 102,
-          "latency_ms": 2941,
+          "latency_ms": 2943,
           "average_latency_ms_per_call": 13.62,
           "cost": 327.3,
           "average_cost_per_solved_scenario": 0.0
@@ -12374,8 +12374,8 @@
           "unnecessary_tool_calls": 0,
           "unnecessary_call_rate": 0.0,
           "failures": 0,
-          "latency_ms": 453,
-          "average_latency_ms_per_call": 6.29,
+          "latency_ms": 454,
+          "average_latency_ms_per_call": 6.31,
           "cost": 72.0,
           "average_cost_per_solved_scenario": 3.6
         }
@@ -12390,8 +12390,8 @@
           "unnecessary_tool_calls": 264,
           "unnecessary_call_rate": 1.0,
           "failures": 126,
-          "latency_ms": 3606,
-          "average_latency_ms_per_call": 13.66,
+          "latency_ms": 3612,
+          "average_latency_ms_per_call": 13.68,
           "cost": 400.8,
           "average_cost_per_solved_scenario": 0.0
         },
@@ -12404,8 +12404,8 @@
           "unnecessary_tool_calls": 48,
           "unnecessary_call_rate": 0.4,
           "failures": 0,
-          "latency_ms": 726,
-          "average_latency_ms_per_call": 6.05,
+          "latency_ms": 731,
+          "average_latency_ms_per_call": 6.09,
           "cost": 120.0,
           "average_cost_per_solved_scenario": 15.0
         },
@@ -12418,8 +12418,8 @@
           "unnecessary_tool_calls": 0,
           "unnecessary_call_rate": 0.0,
           "failures": 0,
-          "latency_ms": 557,
-          "average_latency_ms_per_call": 6.33,
+          "latency_ms": 554,
+          "average_latency_ms_per_call": 6.3,
           "cost": 88.0,
           "average_cost_per_solved_scenario": 3.6667
         }
@@ -12450,8 +12450,8 @@
           },
           "latency_ms": {
             "v": 582,
-            "before": 2941,
-            "pct_change": -80.21
+            "before": 2943,
+            "pct_change": -80.22
           },
           "cost": {
             "v": 96.0,
@@ -12481,9 +12481,9 @@
             "pct_change": null
           },
           "latency_ms": {
-            "v": 453,
+            "v": 454,
             "before": 582,
-            "pct_change": -22.16
+            "pct_change": -21.99
           },
           "cost": {
             "v": 72.0,
@@ -12513,9 +12513,9 @@
             "pct_change": -100.0
           },
           "latency_ms": {
-            "v": 453,
-            "before": 2941,
-            "pct_change": -84.6
+            "v": 454,
+            "before": 2943,
+            "pct_change": -84.57
           },
           "cost": {
             "v": 72.0,
@@ -12547,9 +12547,9 @@
             "pct_change": -100.0
           },
           "latency_ms": {
-            "v": 726,
-            "before": 3606,
-            "pct_change": -79.87
+            "v": 731,
+            "before": 3612,
+            "pct_change": -79.76
           },
           "cost": {
             "v": 120.0,
@@ -12579,9 +12579,9 @@
             "pct_change": null
           },
           "latency_ms": {
-            "v": 557,
-            "before": 726,
-            "pct_change": -23.28
+            "v": 554,
+            "before": 731,
+            "pct_change": -24.21
           },
           "cost": {
             "v": 88.0,
@@ -12611,9 +12611,9 @@
             "pct_change": -100.0
           },
           "latency_ms": {
-            "v": 557,
-            "before": 3606,
-            "pct_change": -84.55
+            "v": 554,
+            "before": 3612,
+            "pct_change": -84.66
           },
           "cost": {
             "v": 88.0,
@@ -12632,7 +12632,7 @@
           "unnecessary_tool_calls": 216,
           "unnecessary_call_rate": 1.0,
           "failures": 102,
-          "latency_ms": 2941,
+          "latency_ms": 2943,
           "average_latency_ms_per_call": 13.62,
           "cost": 327.3
         },
@@ -12654,8 +12654,8 @@
           "unnecessary_tool_calls": 0,
           "unnecessary_call_rate": 0.0,
           "failures": 0,
-          "latency_ms": 453,
-          "average_latency_ms_per_call": 6.29,
+          "latency_ms": 454,
+          "average_latency_ms_per_call": 6.31,
           "cost": 72.0
         }
       },
@@ -12667,8 +12667,8 @@
           "unnecessary_tool_calls": 264,
           "unnecessary_call_rate": 1.0,
           "failures": 126,
-          "latency_ms": 3606,
-          "average_latency_ms_per_call": 13.66,
+          "latency_ms": 3612,
+          "average_latency_ms_per_call": 13.68,
           "cost": 400.8
         },
         "v2": {
@@ -12678,8 +12678,8 @@
           "unnecessary_tool_calls": 48,
           "unnecessary_call_rate": 0.4,
           "failures": 0,
-          "latency_ms": 726,
-          "average_latency_ms_per_call": 6.05,
+          "latency_ms": 731,
+          "average_latency_ms_per_call": 6.09,
           "cost": 120.0
         },
         "v3": {
@@ -12689,8 +12689,8 @@
           "unnecessary_tool_calls": 0,
           "unnecessary_call_rate": 0.0,
           "failures": 0,
-          "latency_ms": 557,
-          "average_latency_ms_per_call": 6.33,
+          "latency_ms": 554,
+          "average_latency_ms_per_call": 6.3,
           "cost": 88.0
         }
       }
@@ -12719,8 +12719,8 @@
               "unnecessary_tool_calls": 66,
               "unnecessary_call_rate": 1.0,
               "failures": 36,
-              "latency_ms": 912,
-              "average_latency_ms_per_call": 13.82,
+              "latency_ms": 913,
+              "average_latency_ms_per_call": 13.83,
               "cost": 100.8
             }
           },
@@ -12758,8 +12758,8 @@
               "unnecessary_tool_calls": 0,
               "unnecessary_call_rate": 0.0,
               "failures": 0,
-              "latency_ms": 108,
-              "average_latency_ms_per_call": 6.0,
+              "latency_ms": 109,
+              "average_latency_ms_per_call": 6.06,
               "cost": 18.0
             },
             "gen": {
@@ -12842,8 +12842,8 @@
               "unnecessary_tool_calls": 54,
               "unnecessary_call_rate": 1.0,
               "failures": 24,
-              "latency_ms": 738,
-              "average_latency_ms_per_call": 13.67,
+              "latency_ms": 740,
+              "average_latency_ms_per_call": 13.7,
               "cost": 82.8
             },
             "gen": {
@@ -12853,8 +12853,8 @@
               "unnecessary_tool_calls": 66,
               "unnecessary_call_rate": 1.0,
               "failures": 30,
-              "latency_ms": 906,
-              "average_latency_ms_per_call": 13.73,
+              "latency_ms": 907,
+              "average_latency_ms_per_call": 13.74,
               "cost": 101.4
             }
           },
@@ -12878,8 +12878,8 @@
               "unnecessary_tool_calls": 12,
               "unnecessary_call_rate": 0.4,
               "failures": 0,
-              "latency_ms": 186,
-              "average_latency_ms_per_call": 6.2,
+              "latency_ms": 187,
+              "average_latency_ms_per_call": 6.23,
               "cost": 30.0
             }
           },
@@ -12903,8 +12903,8 @@
               "unnecessary_tool_calls": 0,
               "unnecessary_call_rate": 0.0,
               "failures": 0,
-              "latency_ms": 149,
-              "average_latency_ms_per_call": 6.77,
+              "latency_ms": 146,
+              "average_latency_ms_per_call": 6.64,
               "cost": 22.0
             }
           }
@@ -12976,8 +12976,8 @@
               "unnecessary_tool_calls": 54,
               "unnecessary_call_rate": 1.0,
               "failures": 24,
-              "latency_ms": 748,
-              "average_latency_ms_per_call": 13.85,
+              "latency_ms": 747,
+              "average_latency_ms_per_call": 13.83,
               "cost": 82.2
             },
             "gen": {
@@ -12987,8 +12987,8 @@
               "unnecessary_tool_calls": 66,
               "unnecessary_call_rate": 1.0,
               "failures": 30,
-              "latency_ms": 918,
-              "average_latency_ms_per_call": 13.91,
+              "latency_ms": 919,
+              "average_latency_ms_per_call": 13.92,
               "cost": 100.8
             }
           },
@@ -13012,8 +13012,8 @@
               "unnecessary_tool_calls": 12,
               "unnecessary_call_rate": 0.4,
               "failures": 0,
-              "latency_ms": 180,
-              "average_latency_ms_per_call": 6.0,
+              "latency_ms": 183,
+              "average_latency_ms_per_call": 6.1,
               "cost": 30.0
             }
           },
@@ -13110,8 +13110,8 @@
               "unnecessary_tool_calls": 54,
               "unnecessary_call_rate": 1.0,
               "failures": 24,
-              "latency_ms": 708,
-              "average_latency_ms_per_call": 13.11,
+              "latency_ms": 709,
+              "average_latency_ms_per_call": 13.13,
               "cost": 79.8
             },
             "gen": {
@@ -13121,8 +13121,8 @@
               "unnecessary_tool_calls": 66,
               "unnecessary_call_rate": 1.0,
               "failures": 30,
-              "latency_ms": 870,
-              "average_latency_ms_per_call": 13.18,
+              "latency_ms": 873,
+              "average_latency_ms_per_call": 13.23,
               "cost": 97.8
             }
           },
@@ -13146,8 +13146,8 @@
               "unnecessary_tool_calls": 12,
               "unnecessary_call_rate": 0.4,
               "failures": 0,
-              "latency_ms": 192,
-              "average_latency_ms_per_call": 6.4,
+              "latency_ms": 193,
+              "average_latency_ms_per_call": 6.43,
               "cost": 30.0
             }
           },
@@ -13237,9 +13237,9 @@
   "narrative": [
     "On the held-out investigation instances, scenario solve rate rose from 0.0% (V1) to 40.0% (V2) to 100.0% (V3).",
     "Unnecessary tool calls on held-out instances fell from 216 (V1) to 36 (V2) to 0 (V3); total tool calls from 216 to 96 to 72.",
-    "Failures on held-out instances: V1 102, V2 0, V3 0. Measured latency: 2941ms -> 582ms -> 453ms (avg per call 13.62ms -> 6.06ms -> 6.29ms). Modeled cost: 327.30 -> 96.00 -> 72.00.",
+    "Failures on held-out instances: V1 102, V2 0, V3 0. Measured latency: 2943ms -> 582ms -> 454ms (avg per call 13.62ms -> 6.06ms -> 6.31ms). Modeled cost: 327.30 -> 96.00 -> 72.00.",
     "On the unseen investigation instances, scenario solve rate rose from 0.0% (V1) to 33.3% (V2) to 100.0% (V3).",
     "Unnecessary tool calls on unseen instances fell from 264 (V1) to 48 (V2) to 0 (V3); total tool calls from 264 to 120 to 88.",
-    "Failures on unseen instances: V1 126, V2 0, V3 0. Measured latency: 3606ms -> 726ms -> 557ms (avg per call 13.66ms -> 6.05ms -> 6.33ms). Modeled cost: 400.80 -> 120.00 -> 88.00."
+    "Failures on unseen instances: V1 126, V2 0, V3 0. Measured latency: 3612ms -> 731ms -> 554ms (avg per call 13.68ms -> 6.09ms -> 6.3ms). Modeled cost: 400.80 -> 120.00 -> 88.00."
   ]
 }
