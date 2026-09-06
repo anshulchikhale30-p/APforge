@@ -433,6 +433,13 @@ class Database:
             ).fetchone()
         return self._memory_from_row(row) if row else None
 
+    def clear_memory(self, agent_id: str) -> None:
+        """Drop all memory rows for an agent."""
+        with self._lock, self._conn:
+            self._conn.execute(
+                "DELETE FROM tool_memory WHERE agent_id = ?", (agent_id,)
+            )
+
     def list_memory(
         self, agent_id: str, task_type: Optional[str] = None
     ) -> list[ToolMemory]:
